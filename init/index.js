@@ -1,30 +1,25 @@
-const mongoose = require('mongoose');
-const initData = require('./data.js');
- 
-const Listing = require('../models/listing.js');
+const mongoose = require("mongoose");
+const initData = require("./data.js");
+const Listing = require("../models/listing.js");
 
-const MONGO_URI = 'mongodb://localhost:27017/projectdb';
+const MONGO_URL = "mongodb://127.0.0.1:27017/projectdb";
+
+main()
+  .then(() => {
+    console.log("connected to DB");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 async function main() {
-    await mongoose.connect(MONGO_URI);
+  await mongoose.connect(MONGO_URL);
 }
-
-main().then(() =>{
-    console.log('Connected to MongoDB');
-}).catch(err => {
-    console.error('MongoDB connection error:', err);
-});
 
 const initDB = async () => {
   await Listing.deleteMany({});
-  console.log("Cleared existing listings");
-  await Listing.insertMany(initData.sampleListings);
-  console.log("Database initialized with listing data");
-  mongoose.connection.close();
+  await Listing.insertMany(initData.data);
+  console.log("data was initialized");
 };
 
-main()
-  .then(initDB)
-  .catch(err => {
-    console.error("MongoDB connection error:", err);
-  });
+initDB();

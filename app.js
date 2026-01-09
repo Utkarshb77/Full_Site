@@ -6,8 +6,11 @@ const path = require('path');
 const mongoose = require('mongoose');
 const MONGO_URI = 'mongodb://localhost:27017/projectdb';
 const methodOverride = require('method-override');
+const ejsMate = require('ejs-mate');
 
+app.engine('ejs', ejsMate);
 app.use(methodOverride('_method'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 async function main() {
     await mongoose.connect(MONGO_URI);

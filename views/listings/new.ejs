@@ -1,31 +1,48 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fill Details</title>
-</head>
-<body>
-    <h1>Create a New Listing</h1>
-    <form action="/listings" method="post">
-        <label for="title">Title:</label>
-        <input type="text" id="title" name="title" required><br><br>
+<% layout("/layouts/boilerplate") %>
 
-        <label for="description">Description:</label>
-        <textarea id="description" name="description" required></textarea><br><br>
+    <body>
 
-        <label for="image">Image URL:</label>
-        <input type="text" id="image" name="image" placeholder="enter image url/link"><br><br>
-        
-        <label for="price">Price (INR):</label>
-        <input type="number" id="price" name="price" required><br><br>
+        <div class="row mt-3">
+            <div class="col col-8 offset-2"> <!-- col-8 bootstap divides row div into 8 parts -->
+                <h1 class="my-4">Create a New Listing</h1>
+                <form action="/listings" method="post">
 
-        <label for="location">Location:</label>
-        <input type="text" id="location" name="location" required><br><br>
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title:</label>
+                        <input type="text" id="title" name="title" class="form-control" placeholder="Mannat House" required>
+                    </div>
 
-        <label for="country">Country:</label>
-        <input type="text" id="country" name="country" required><br><br>
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Description:</label>
+                        <textarea id="description" name="description" class="form-control"  placeholder="Speciality about this House"  required></textarea>
+                    </div>
 
-        <button type="submit">Create Listing</button>
-</body>
-</html>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image URL:</label>
+                        <input type="text" id="image" name="image" class="form-control"
+                            placeholder="enter image url/link">
+                    </div>
+
+                    <div class="row">
+                        <div class="mb-3 col-md-4">
+                            <label for="price" class="form-label">Price (INR):</label>
+                            <input type="number" id="price" name="price" class="form-control"  placeholder="Enter price in INR"  required>
+                        </div>
+
+                        <div class="mb-3 col-md-8">
+                            <label for="country" class="form-label">Country:</label>
+                            <input type="text" id="country" name="country" class="form-control"  placeholder="India"  required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location:</label>
+                        <input type="text" id="location" name="location" class="form-control"  placeholder="Mumbai"  required>
+                    </div>
+                  
+                    <button class="btn btn-dark mt-3" type="submit">Create Listing</button>
+                    <br><br>
+                </form>
+            </div>
+        </div>
+    </body>
