@@ -5,34 +5,34 @@
         <div class="row mt-3">
             <div class="col col-8 offset-2"> <!-- col-8 bootstap divides row div into 8 parts -->
                 <h1 class="my-4">Edit Listing</h1>
-                <form action="/listings/<%= listing._id %>?_method=put" method="post">
+                <form action="/listings/<%= listing._id %>?_method=put" method="post" novalidate class="needs-validation">
 
                     <div class="mb-3">
                         <label for="title" class="form-label">Title:</label>
-                        <input type="text" id="title" name="title" class="form-control" value="<%= listing.title %>">
+                        <input type="text" id="title" name="listing[title]" class="form-control" value="<%= listing.title %>">
                     </div>
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Description:</label>
-                        <textarea id="description" name="description" rows="5" cols="20" class="form-control"
+                        <textarea id="description" name="listing[description]" rows="5" cols="20" class="form-control"
                             required><%= listing.description %></textarea>
                     </div>
 
                     <div class="mb-3">
                         <label for="image" class="form-label">Image Link:</label>
-                        <input type="text" id="image" name="listing[image]" class="form-control"
+                        <input type="text" id="image" name="listing[image][url]" class="form-control"
                             placeholder="enter image url/link" value="<%= listing.image.url %>">
                     </div>
 
                     <div class="row">
                         <div class="mb-3 col-md-4">
                             <label for="price" class="form-label">Price (INR):</label>
-                            <input type="number" id="price" name="price" class="form-control"
+                            <input type="number" id="price" name="listing[price]" class="form-control"
                                 value="<%= listing.price %>" required>
                         </div>
                         <div class="mb-3 col-md-8">
                             <label for="country" class="form-label">Country:</label>
-                            <input type="text" id="country" name="country" class="form-control"
+                            <input type="text" id="country" name="listing[country]" class="form-control"
                                 value="<%= listing.country %>" required>
                         </div>
 
@@ -40,7 +40,7 @@
 
                     <div class="mb-3">
                         <label for="location" class="form-label">Location:</label>
-                        <input type="text" id="location" name="location" class="form-control"
+                        <input type="text" id="location" name="listing[location]" class="form-control"
                             value="<%= listing.location %>" required>
                     </div>
                    
