@@ -1,5 +1,4 @@
 const express = require('express');
-const Listing = require('./models/listing.js');
 const app = express();
 const PORT = process.env.PORT || 7700;
 const path = require('path');
@@ -7,10 +6,10 @@ const mongoose = require('mongoose');
 const MONGO_URI = 'mongodb://localhost:27017/projectdb';
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
-const wrapAsync = require('./utils/wrapAsync.js');
 const MyErrors = require('./utils/MyErrors.js');
-const {listingSchema ,  reviewSchema } = require('./schema.js');
-const Review = require('./models/review.js');
+
+const listings = require('./routes/listing.js');
+const reviews = require('./routes/review.js');
 
 app.engine('ejs', ejsMate);
 app.use(methodOverride('_method'));
@@ -47,98 +46,11 @@ app.use(express.urlencoded({ extended: true }));
 //     res.send("successful testing");
 // });
 
-// Validation Middleware 
-const validateListing = (req, res, next) => {
-  const { error } = listingSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map(el => el.message).join(", ");
-    throw new MyErrors(400, msg);
-  }
-  next();
-};
+// Use listing routes
+app.use('/listings', listings);
+app.use('/listings/:id/reviews', reviews);
 
-const validateReview = (req, res, next) => {
-  let { error } = reviewSchema.validate(req.body);
-    if (error) {
-    const msg = error.details.map(el => el.message).join(", ");
-    throw new MyErrors(400, msg);
-  }
-    next();
-};
-
-
-// Routes
-// Index route for listings
-app.get('/listings', wrapAsync(async (req, res) => {
-    const alllistings = await Listing.find({});
-    res.render('listings/index.ejs', { alllistings });
-}));
-
-// New route for listings
-app.get('/listings/new', (req, res) => {
-    res.render('listings/new.ejs');
-});
-// Create route for listings
-app.post('/listings', validateListing , wrapAsync(async (req, res, next) => {
-    // listingSchema.validate(req.body); // Validation moved to middleware defined above
-    const newListing = new Listing(req.body.listing);
-    console.log(newListing);
-    await newListing.save();
-    res.redirect('/listings');
-}));
-
-// Show route for listings
-app.get('/listings/:id', wrapAsync(async (req, res) => {
-
-    const { id } = req.params;
-    const listing = await Listing.findById(id).populate('reviews');
-    if (!listing) {
-        return res.status(404).send('Listing not found');
-    }
-    res.render('listings/show.ejs', { listing });
-}));
-
-// Edit route for listings
-app.get('/listings/:id/edit', wrapAsync(async (req, res) => {
-    let { id } = req.params;
-    let listing = await Listing.findById(id);
-    res.render('listings/edit.ejs', { listing });
-}));
-// Update route for listings
-app.put('/listings/:id', validateListing , wrapAsync(async (req, res) => {
-    let { id } = req.params;
-    let listing = await Listing.findByIdAndUpdate(id, req.body.listing, { runValidators: true });
-    res.redirect(`/listings/${listing.id}`);
-}));
-
-// Delete route for listings
-app.delete('/listings/:id', wrapAsync(async (req, res) => {
-    let { id } = req.params;
-    await Listing.findByIdAndDelete(id);
-    res.redirect('/listings');
-}));
-
-// Post route for reviews
-app.post('/listings/:id/reviews', validateReview, wrapAsync(async (req, res) => { 
-    const { id } = req.params;
-    const listing = await Listing.findById(id);
-    let newReview = new Review(req.body.review);
-    listing.reviews.push(newReview);
-    await newReview.save();
-    await listing.save();
-    res.redirect(`/listings/${listing.id}`);
-}));
-
-// Delete review route
-app.delete('/listings/:id/reviews/:reviewId', wrapAsync(async (req, res) => {
-    const { id, reviewId } = req.params;
-    await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } }); // Remove reference from listing. 
-    // pull operator is used to remove from an array all instances of a value or values that match a specified condition.
-    await Review.findByIdAndDelete(reviewId);
-    res.redirect(`/listings/${id}`);
-}));
- 
-// Error Handling Middle  eware
+// Error Handling Middleware
 app.use((req, res, next) => {
     next(new MyErrors(404, "Page Not Found"));
 });
