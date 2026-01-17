@@ -1,0 +1,17 @@
+<!-- post route call hone per flash hoga -->
+<% if(success && success.length){ %>
+  <div class="alert alert-success alert-dismissible fade show col-6 offset-3" role="alert">
+    <%= success[0] %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>
+
+<% if(error && error.length){ %>
+  <div class="alert alert-danger alert-dismissible fade show col-6 offset-3" role="alert">
+    <%= error[0] %>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% } %>
+<!-- delete route call hone per delete vala flash show hoga.
+    humne key name same rakha h isliye humko different flash banane ki need nahi h ab. 
+    Jo flash call hoga uska msg print hoga. (sabmai key name success hai).  -->

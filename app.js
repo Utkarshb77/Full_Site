@@ -7,13 +7,38 @@ const MONGO_URI = 'mongodb://localhost:27017/projectdb';
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const MyErrors = require('./utils/MyErrors.js');
+const session = require("express-session");
+const flash = require('connect-flash');
 
 const listings = require('./routes/listing.js');
 const reviews = require('./routes/review.js');
 
+
 app.engine('ejs', ejsMate);
-app.use(methodOverride('_method'));
+app.set("view engine", "ejs");
+app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
+
+const sessionOptions = {
+    secret:"mysafekey",
+    resave: false,
+    saveUninitialized : true,
+    cookie: {
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000, // this time is in miliseconds.
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly : true, // to prevent cross scripting attacts.
+    }
+}; 
+app.use(session(sessionOptions));
+app.use(flash()); // we have to use flash before routes bcoz hum unko routes mai use karte hai.
+
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  next();// if next nahi lagaya toh yahi stuck reh jayega.
+});
 
 // MongoDB Connection
 async function main() {
@@ -25,11 +50,6 @@ main().then(() => {
 }).catch(err => {
     console.error('MongoDB connection error:', err);
 });
-
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.urlencoded({ extended: true }));
 
 
 // app.get('/testListing', async (req, res) => {
