@@ -9,10 +9,14 @@ const ejsMate = require('ejs-mate');
 const MyErrors = require('./utils/MyErrors.js');
 const session = require("express-session");
 const flash = require('connect-flash');
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
+const User = require("./models/user.js");
 
-const listings = require('./routes/listing.js');
-const reviews = require('./routes/review.js');
 
+const listingRouter = require('./routes/listing.js');
+const reviewRouter = require('./routes/review.js');
+const userRouter = require("./routes/user.js");
 
 app.engine('ejs', ejsMate);
 app.set("view engine", "ejs");
@@ -33,6 +37,15 @@ const sessionOptions = {
 }; 
 app.use(session(sessionOptions));
 app.use(flash()); // we have to use flash before routes bcoz hum unko routes mai use karte hai.
+// passport session ko use karte h toh there should be session implemented.
+app.use(passport.initialize()); // compulsory line
+app.use(passport.session());  // we use this taaki har request ko pata ho ki ye konse session ka part h or hum usse firse login naa karwaye.
+passport.use(new LocalStrategy(User.authenticate())); // Authenticate fucntion is used in Passport's local Strategy.
+
+passport.serializeUser(User.serializeUser()); // to serialize a session (means user se related information session mai store karwate h means serialize a User).
+passport.deserializeUser(User.deserializeUser()); // to deserialize a session (means user se related information session se hatate hai means deserialize a User).
+
+
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
@@ -67,8 +80,9 @@ main().then(() => {
 // });
 
 // Use listing routes
-app.use('/listings', listings);
-app.use('/listings/:id/reviews', reviews);
+app.use('/listings', listingRouter);
+app.use('/listings/:id/reviews', reviewRouter);
+app.use('/', userRouter);
 
 // Error Handling Middleware
 app.use((req, res, next) => {
