@@ -50,6 +50,7 @@ passport.deserializeUser(User.deserializeUser()); // to deserialize a session (m
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
+  res.locals.currUser = req.user; // humne user store karwaliya h inside currUser.
   next();// if next nahi lagaya toh yahi stuck reh jayega.
 });
 

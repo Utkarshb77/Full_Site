@@ -6,9 +6,25 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active" aria-current="page" href="http://localhost:7700/listings#">Home</a>
+        <a class="nav-link active" href="http://localhost:7700/listings#">Home</a>
+        <a class="nav-link active" href="http://localhost:7700/listings">All Listings</a>
         <a class="nav-link" href="http://localhost:7700/listings/new">Add new List</a>
       </div>
     </div>
+
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <div class="navbar-nav ms-auto">
+        <!-- humne res.user ko currUser mai store karwa liya h using locals, jaha flash define karwaye h . -->
+        <% if(!currUser) { %> 
+          <a class="nav-link active" href="http://localhost:7700/signup">Sign Up</a>
+          <a class="nav-link" href="http://localhost:7700/login">Login</a>
+        <% } %>
+         <% if(currUser) { %>
+          <a class="nav-link" href="http://localhost:7700/logout">Log out</a>
+        <% } %>
+      </div>
+    </div>
+
+
   </div>
 </nav>
