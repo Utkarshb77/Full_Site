@@ -31,7 +31,10 @@ module.exports.ShowListing =  async (req, res) => {
 
 module.exports.createListing = async (req, res, next) => {
     // listingSchema.validate(req.body); // Validation moved to middleware defined above
+    let url = req.file.path;
+    let filename = req.file.filename; 
     const newListing = new Listing(req.body.listing);
+    newListing.image = {url , filename}; // Cloudinary se humne uss image ko save karwa k uska link nikal k yaha database mai add karwa diya hai. 
     newListing.owner = req.user._id; // use: when we create a listing then uske owner ki id leli h .
     await newListing.save();
     req.flash("success" , "New Listing Created");

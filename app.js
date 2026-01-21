@@ -1,3 +1,7 @@
+if(process.env.NODE_ENV != "production"){ // means hamara project jab production phase mai jayega toh we'll not use dotenv.
+    require("dotenv").config();
+}
+
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 7700;
@@ -93,6 +97,8 @@ app.use((req, res, next) => {
 // Generic Error Handler
 app.use((err, req, res, next) => { // Error handling middleware, must have 4 parameters
     // Saare errors yahan handle ho jayenge
+    console.log("🔥 ERROR:", err);             // ✅ add this
+    console.log("🔥 STACK:", err.stack);
     let { status = 500, message = "Something Went Wrong" } = err;
     res.status(status).render('error.ejs', { status, message });
 });
