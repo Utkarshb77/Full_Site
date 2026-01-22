@@ -51,7 +51,7 @@ module.exports.editForm = async (req, res) => {
     res.render('listings/edit.ejs', { listing });
 };
 
-module.exports.updatelisting = async (req, res) => {
+module.exports.updatelisting = async (req, res) => { 
     let { id } = req.params;
     // create a middleware for this in middleware.js
     // let listing = Listing.findById(id); 
@@ -60,6 +60,12 @@ module.exports.updatelisting = async (req, res) => {
     //     return res.redirect(`/listings/${listing.id}`);
     // }
     const listing = await Listing.findByIdAndUpdate(id, req.body.listing, { runValidators: true });
+    if(typeof req.file !== "undefined" ){ // if updating the image then extracting it from files then upadeting it back to DB. 
+        let url = req.file.path;
+        let filename = req.file.filename; 
+        listing.image = {url , filename};
+        await listing.save();
+    }
     req.flash("success" , "Post Updated. ");
     res.redirect(`/listings/${listing.id}`);
 };

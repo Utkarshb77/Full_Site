@@ -1,7 +1,3 @@
-if(process.env.NODE_ENV != "production"){ // means hamara project jab production phase mai jayega toh we'll not use dotenv.
-    require("dotenv").config();
-}
-
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 7700;

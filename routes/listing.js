@@ -29,7 +29,7 @@ router.get('/new', isloggedin, listingController.NewlistingForm); // hum control
 // Show route for listings
 router.route('/:id')
     .get(wrapAsync(listingController.ShowListing))  // humne yaha jo callback banaya tha usko controllers k andar listing.js k andar ShowRoute function banake use kiya h yaha. 
-    .put(isloggedin, isOwner, validateListing, wrapAsync(listingController.updatelisting)) // Update route for listings
+    .put(isloggedin, isOwner, upload.single("listing[image]") ,validateListing, wrapAsync(listingController.updatelisting)) // Update route for listings
     .delete(isloggedin, wrapAsync(listingController.destroylisting));// Delete route for listings
 
 // Edit route for listings

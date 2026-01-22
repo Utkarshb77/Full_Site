@@ -1,30 +1,37 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#"><i class="fa-duotone fa-solid fa-house-chimney"></i></a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="http://localhost:7700/listings"><i
+        class="fa-duotone fa-solid fa-house-chimney"></i></a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+      aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link active" href="http://localhost:7700/listings#">Home</a>
-        <a class="nav-link active" href="http://localhost:7700/listings">All Listings</a>
-        <a class="nav-link" href="http://localhost:7700/listings/new">Add new List</a>
+        <a class="nav-link active" href="http://localhost:7700/listings#">Explore</a>
+
       </div>
+    </div>
+    <div>
+      <form class="d-flex navbar-nav ms-auto" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search Destinations"/>
+        <button class="btn btn-search" type="submit"> <i class="fa-solid fa-magnifying-glass"></i>Search</button>
+      </form>
     </div>
 
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav ms-auto">
+        <a class="nav-link" href="http://localhost:7700/listings/new">Airbnb your Home</a>
         <!-- humne res.user ko currUser mai store karwa liya h using locals, jaha flash define karwaye h . -->
-        <% if(!currUser) { %> 
-          <a class="nav-link active" href="http://localhost:7700/signup">Sign Up</a>
-          <a class="nav-link" href="http://localhost:7700/login">Login</a>
-        <% } %>
-         <% if(currUser) { %>
-          <a class="nav-link" href="http://localhost:7700/logout">Log out</a>
-        <% } %>
+        <% if(!currUser) { %>
+          <a class="nav-link active" href="http://localhost:7700/signup"><b>Sign Up</b></a>
+          <a class="nav-link" href="http://localhost:7700/login"><b>Login</b></a>
+          <% } %>
+            <% if(currUser) { %>
+              <a class="nav-link" href="http://localhost:7700/logout"><b>Log out</b></a>
+              <% } %>
       </div>
     </div>
-
 
   </div>
 </nav>

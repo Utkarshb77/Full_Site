@@ -73,3 +73,18 @@ body{
 .btn-success{
     background-color: Green !important;
 }
+
+.btn-search{
+    background-color: #fe424d;
+    color: #fff !important;
+}
+
+.btn-search:hover {
+    color: #000000 !important;
+    background-color: #fe424d;
+}
+
+.btn-search i {
+    display: inline;
+    margin-right: 0.5rem;
+}
