@@ -70,7 +70,7 @@ A full-stack accommodation rental platform built with Node.js, Express, and Mong
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/staynest.git
+   git clone https://github.com/Utkarshb77/StayNest
    cd staynest
    ```
 
