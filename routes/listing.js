@@ -1,7 +1,7 @@
 const express = require('express');
 const Listing = require('../models/listing.js');
 const Review = require('../models/listing.js');
-const router = require('express').Router({ mergeParams: true });
+const router = require('express').Router({ mergeParams: true }); // mergeParams:true kiya h bcoz if agar hum ye nahi karenge toh hamare kai saare routes ka poora path nahi aayega yaha / ke aage ka.
 const wrapAsync = require('../utils/wrapAsync.js');
 const { listingSchema, reviewSchema } = require('../schema.js');
 const { isloggedin, isOwner, validateListing, isAuthor } = require("../middleware.js");

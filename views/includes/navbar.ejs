@@ -1,37 +1,43 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom sticky-top">
   <div class="container-fluid">
-    <a class="navbar-brand" href="http://localhost:7700/listings"><i
-        class="fa-duotone fa-solid fa-house-chimney"></i></a>
+    <!-- Left: StayNest Brand with home icon -->
+    <a class="navbar-brand" href="http://localhost:7700/listings">
+      <i class="fa-duotone fa-solid fa-house-chimney"></i>
+      <span class="fw-bold">StayNest</span>
+    </a>
+    <!-- Tax toggle -->
+    <div class="form-check form-check-reverse form-switch mt-2 me-3">
+      <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+      <label class="form-check-label" for="switchCheckDefault">After Tax</label>
+    </div>
+
+    <!-- Center: Search Bar (absolutely positioned) -->
+    <form class="d-flex position-absolute start-50 translate-middle-x" style="width: 350px;" role="search">
+      <input class="form-control me-2" type="search" placeholder="Search Destinations" aria-label="Search" />
+      <button class="btn btn-danger" type="submit">Search</button>
+    </form>
+
+    <!-- Mobile toggle button -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
       aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-link active" href="http://localhost:7700/listings#">Explore</a>
 
-      </div>
-    </div>
-    <div>
-      <form class="d-flex navbar-nav ms-auto" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search Destinations"/>
-        <button class="btn btn-search" type="submit"> <i class="fa-solid fa-magnifying-glass"></i>Search</button>
-      </form>
-    </div>
-
+    <!-- Right: User actions and tax toggle -->
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav ms-auto">
-        <a class="nav-link" href="http://localhost:7700/listings/new">Airbnb your Home</a>
-        <!-- humne res.user ko currUser mai store karwa liya h using locals, jaha flash define karwaye h . -->
-        <% if(!currUser) { %>
+
+        <!-- Add new place button -->
+        <a class="btn btn-danger me-2" href="http://localhost:7700/listings/new">Add New Place</a>
+
+        <!-- User auth links -->
+        <% if(typeof currUser==="undefined" || !currUser) { %>
           <a class="nav-link active" href="http://localhost:7700/signup"><b>Sign Up</b></a>
           <a class="nav-link" href="http://localhost:7700/login"><b>Login</b></a>
-          <% } %>
-            <% if(currUser) { %>
-              <a class="nav-link" href="http://localhost:7700/logout"><b>Log out</b></a>
-              <% } %>
+          <% } else { %>
+            <a class="nav-link" href="http://localhost:7700/logout"><b>Log out</b></a>
+            <% } %>
       </div>
     </div>
-
   </div>
 </nav>
